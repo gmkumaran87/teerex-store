@@ -25,3 +25,11 @@ export const laptop = (props) => {
     }
   `;
 };
+
+export const desktop = (props) => {
+    return css `
+    @media screen and (min-width: 1440px) {
+      ${props}
+    }
+  `;
+};

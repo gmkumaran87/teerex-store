@@ -8,8 +8,6 @@ import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Layout from "./components/Layout";
 import Products from "./pages/Products";
-// import { fetchData } from "./services/products.service";
-// import { useState, useEffect } from "react";
 
 function App() {
   return (

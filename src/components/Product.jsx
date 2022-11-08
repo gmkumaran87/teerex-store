@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Flex } from "../styles/Common.styled";
 import Button from "./Button";
+import { laptop } from "../styles/responsive";
 
 const Card = styled.article`
   display: flex;
@@ -15,6 +16,9 @@ const Card = styled.article`
   padding: 0.51rem;
   height: auto;
   background-color: ${({ theme }) => theme.backgroundBlue};
+  ${laptop({
+    width: "310px",
+  })}
 `;
 
 const Heading = styled.h2`
@@ -34,7 +38,7 @@ const Image = styled.img`
 
 const Product = ({ item }) => {
   const { name, imageURL, price } = item;
-  console.log("Products", name, imageURL);
+  // console.log("Products", name, imageURL);
   return (
     <Card>
       <Heading>{name}</Heading>
