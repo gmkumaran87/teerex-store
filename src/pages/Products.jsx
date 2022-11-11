@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "styled-components";
+import { GENDER } from "../common/constant";
 import { createCheckboxItems } from "../common/helper";
 import Filters from "../components/Filters";
 import Header from "../components/Header";
@@ -31,6 +33,7 @@ const Wrapper = styled.section`
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     justifyContent: "flex-start",
+    alignItems: "flex-start",
     padding: "0 2rem",
     gap: "2rem",
   })}
@@ -55,7 +58,7 @@ const Products = () => {
   const products = resource?.products?.read();
 
   const addProducts = useProductContext((state) => state.addProducts);
-  // const prod = useProductContext((state) => state.products);
+  const filteredProducts = useProductContext((state) => state.fProducts);
 
   const { colorsArray, typesArray, priceArray } = createCheckboxItems(products);
 
@@ -64,13 +67,23 @@ const Products = () => {
   }, [products]);
 
   // console.log("Checkboxes", colorsArray, typesArray, priceArray);
+  const finalProducts = filteredProducts || products;
 
-  const content = products.map((el) => <Product key={el.id} item={el} />);
+  const content = finalProducts.map((el) => <Product key={el.id} item={el} />);
+
+  console.log("Products", filteredProducts);
   return (
     <Flex direction="column nowrap" gap="2rem" width="100%">
       <Header />
       <ItemsWrapper>
-        <Filters colors={colorsArray} types={typesArray} price={priceArray} />
+        <ErrorBoundary fallback={<h3>Filters are not available</h3>}>
+          <Filters
+            colors={colorsArray}
+            types={typesArray}
+            price={priceArray}
+            gender={GENDER}
+          />
+        </ErrorBoundary>
         <Wrapper>{content}</Wrapper>
       </ItemsWrapper>
     </Flex>

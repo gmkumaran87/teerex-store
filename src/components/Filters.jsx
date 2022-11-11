@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CheckBox from "./CheckBox";
 import { useState } from "react";
 import { laptop } from "../styles/responsive";
+import { useProductContext } from "../context/productsContext";
 
 const AsideWrapper = styled.aside`
   box-shadow: ${({ theme }) => theme.boxShadow};
@@ -31,12 +32,24 @@ const Heading = styled.h3`
   letter-spacing: 2px;
 `;
 
-const Filters = ({ colors, types, price }) => {
+const Filters = ({ colors, types, price, gender }) => {
+  const filterProducts = useProductContext((state) => state.filterProducts);
+  const removeFilters = useProductContext((state) => state.removeFilters);
+  const filterOptions = useProductContext((state) => state.filterOptions);
+  const filterOrder = useProductContext((state) => state.filterOrder);
+
   const [focusbox, setFocusBox] = useState(colors);
   const [priceValues, setPriceValues] = useState(price);
   const [typeValues, setTypeValues] = useState(types);
+  const [genderValues, setGenderValues] = useState(gender);
 
   const handleColor = (index, isChecked) => {
+    // Getting the colors selected
+    const filteredColor = focusbox[index].name;
+
+    // Setting the colors option in filterOptions order
+    // Send {'color' : count}
+
     setFocusBox(
       focusbox.map((el) => {
         if (el.id === index) {
@@ -46,27 +59,71 @@ const Filters = ({ colors, types, price }) => {
         }
       })
     );
+    if (isChecked) {
+      filterProducts(filteredColor, "color");
+    } else {
+      removeFilters(filteredColor, "color");
+    }
   };
 
   const handleTypes = (index, isChecked) => {
+    const filteredType = typeValues[index].name;
+
     setTypeValues(
       typeValues.map((el) =>
         el.id === index ? { ...el, isChecked: isChecked } : el
       )
     );
+
+    if (isChecked) {
+      filterProducts(filteredType, "type");
+    } else {
+      removeFilters(filteredType, "type");
+    }
   };
 
   const handlePrice = (index, isChecked) => {
+    const filteredPrice = priceValues[index].name;
+
     setPriceValues(
       priceValues.map((el) => (el.id === index ? { ...el, isChecked } : el))
     );
+
+    if (isChecked) {
+      filterProducts(filteredPrice, "price");
+    } else {
+      removeFilters(filteredPrice, "price");
+    }
   };
 
+  const handleGender = (index, isChecked) => {
+    console.log("Gender", index, isChecked, genderValues);
+    const filteredGender = genderValues[index].name;
+
+    setGenderValues(
+      genderValues.map((el) => (el.id === index ? { ...el, isChecked } : el))
+    );
+
+    if (isChecked) {
+      filterProducts(filteredGender, "gender");
+    } else {
+      removeFilters(filteredGender, "gender");
+    }
+  };
+
+  console.log("Filter color", {
+    filterOptions,
+    filterOrder,
+  });
   return (
     <AsideWrapper>
       <FormControl>
         <Heading>Colors</Heading>
         <CheckBox list={focusbox} addingItem={handleColor} />
+      </FormControl>
+      <FormControl>
+        <Heading>Gender</Heading>
+        <CheckBox list={genderValues} addingItem={handleGender} />
       </FormControl>
       <FormControl>
         <Heading>Types</Heading>

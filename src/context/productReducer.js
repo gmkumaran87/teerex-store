@@ -108,7 +108,7 @@ const productsReducer = (state, action) => {
       };
     }
     case "FILTER_PRODUCTS": {
-      let { colors, type, gender, price } = state.filterOptions;
+      // let { colors, type, gender, price } = state.filterOptions;
 
       let order = state.filterOrder;
 
