@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "styled-components";
@@ -8,13 +8,10 @@ import Filters from "../components/Filters";
 import Header from "../components/Header";
 import Product from "../components/Product";
 import { useProductContext } from "../context/productsContext";
-import { fetchData } from "../services/products.service";
 import { Flex } from "../styles/Common.styled";
 // import PropTypes from "prop-types";
 
 import { laptop, tablet, desktop } from "../styles/responsive";
-
-const resource = fetchData();
 
 const Wrapper = styled.section`
   display: flex;
@@ -44,7 +41,7 @@ const Wrapper = styled.section`
     padding: "0 3rem",
   })}
 `;
-const ItemsWrapper = styled.section`
+const ItemsWrapper = styled.main`
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
@@ -54,17 +51,10 @@ const ItemsWrapper = styled.section`
     gridTemplateColumns: "250px 1fr",
   })};
 `;
-const Products = () => {
-  const products = resource?.products?.read();
-
-  const addProducts = useProductContext((state) => state.addProducts);
+const Products = ({ products }) => {
   const filteredProducts = useProductContext((state) => state.fProducts);
 
   const { colorsArray, typesArray, priceArray } = createCheckboxItems(products);
-
-  useEffect(() => {
-    addProducts(products);
-  }, [products]);
 
   // console.log("Checkboxes", colorsArray, typesArray, priceArray);
   const finalProducts = filteredProducts || products;

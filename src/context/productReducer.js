@@ -5,7 +5,7 @@ const productsReducer = (state, action) => {
     case "SEARCH_PRODUCT": {
       let products = [];
       if (!action.payload) {
-        products = state.products;
+        products = state.fProducts;
       } else {
         const searchValue = action.payload?.toLowerCase();
         products = state.products.filter(
@@ -169,12 +169,18 @@ const productsReducer = (state, action) => {
       };
     }
     case "ADD_ITEM": {
-      const selectedItem = state.fProducts.filter(
-        (el) => el.id === action.payload
+      const existingProducts = state.fProducts;
+
+      const products = existingProducts.map((el) =>
+        el.id === action.payload
+          ? { ...el, isSelected: true, isSelectedQty: el.selectedQty + 1 }
+          : el
       );
+      const selectedItem = products.filter((el) => el.id === action.payload);
       const outArr = [...state.cartItems, ...selectedItem];
       return {
         ...state,
+        fProducts: products,
         cartItems: outArr,
       };
     }

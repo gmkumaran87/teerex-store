@@ -38,7 +38,7 @@ const Image = styled.img`
 `;
 
 const Product = ({ item }) => {
-  const { name, imageURL, price, id } = item;
+  const { name, imageURL, price, id, isSelected, isSelectedQty } = item;
   // console.log("Products", name, imageURL);
   const addToCart = useProductContext((state) => state.addToCart);
   const addItemToCart = () => {
@@ -56,16 +56,24 @@ const Product = ({ item }) => {
         padding=".5rem"
       >
         <Heading>{`Rs.${price}`}</Heading>
-        <Button
-          height={"30px"}
-          padding="5px 10px"
-          fontSize={".85rem"}
-          backgroundColor={"teal"}
-          color={"#fff"}
-          clickHandler={addItemToCart}
-        >
-          Add to Cart
-        </Button>
+        {isSelected ? (
+          <>
+            <button>+</button>
+            <span>{isSelectedQty}</span>
+            <button>-</button>
+          </>
+        ) : (
+          <Button
+            height={"30px"}
+            padding="5px 10px"
+            fontSize={".85rem"}
+            backgroundColor={"teal"}
+            color={"#fff"}
+            clickHandler={addItemToCart}
+          >
+            Add to Cart
+          </Button>
+        )}
       </Flex>
     </Card>
   );

@@ -35,9 +35,34 @@ const Heading = styled.h3`
 const Filters = ({ colors, types, price, gender }) => {
   const filterProducts = useProductContext((state) => state.filterProducts);
   const removeFilters = useProductContext((state) => state.removeFilters);
-  // const filterOptions = useProductContext((state) => state.filterOptions);
-  // const filterOrder = useProductContext((state) => state.filterOrder);
+  const filterOptions = useProductContext((state) => state.filterOptions);
+  const filterOrder = useProductContext((state) => state.filterOrder);
 
+  // const colorCheckbox = [];
+  [...filterOptions.color].forEach((el) => {
+    colors = colors.map((color) =>
+      el === color.name ? { ...color, isChecked: true } : color
+    );
+    // colorCheckbox.push(...mapEl);
+    // console.log("ColorCheck", colorCheckbox, mapEl, el);
+  });
+
+  [...filterOptions.type].forEach((el) => {
+    types = types.map((type) =>
+      type.name === el ? { ...type, isChecked: true } : type
+    );
+  });
+
+  [...filterOptions.price].forEach((el) => {
+    price = price.map((p) => (p.name === el ? { ...p, isChecked: true } : p));
+  });
+
+  [...filterOptions.gender].forEach((el) => {
+    gender = gender.map((p) => (p.name === el ? { ...p, isChecked: true } : p));
+  });
+
+  // const newColors = colors.map((el) => el.n);
+  console.log("ColorCheck", colors);
   const [focusbox, setFocusBox] = useState(colors);
   const [priceValues, setPriceValues] = useState(price);
   const [typeValues, setTypeValues] = useState(types);
@@ -111,10 +136,10 @@ const Filters = ({ colors, types, price, gender }) => {
     }
   };
 
-  /*console.log("Filter color", {
+  console.log("Filter color", {
     filterOptions,
     filterOrder,
-  });*/
+  });
   return (
     <AsideWrapper>
       <FormControl>
