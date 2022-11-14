@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { ProductContextProvider } from "./context/productsContext";
+// import { ProductContextProvider } from "./context/productsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ProductContextProvider>
-      <App />
-    </ProductContextProvider>{" "}
+    {" "}
+    {/* <ProductContextProvider> */} <App />{" "}
+    {/* </ProductContextProvider>{" "} */}{" "}
   </React.StrictMode>
 );

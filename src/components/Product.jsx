@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Flex } from "../styles/Common.styled";
 import Button from "./Button";
 import { laptop } from "../styles/responsive";
+import { useProductContext } from "../context/productsContext";
 
 const Card = styled.article`
   display: flex;
@@ -37,8 +38,13 @@ const Image = styled.img`
 `;
 
 const Product = ({ item }) => {
-  const { name, imageURL, price } = item;
+  const { name, imageURL, price, id } = item;
   // console.log("Products", name, imageURL);
+  const addToCart = useProductContext((state) => state.addToCart);
+  const addItemToCart = () => {
+    console.log("ADding item", id);
+    addToCart(id);
+  };
   return (
     <Card>
       <Heading>{name}</Heading>
@@ -56,6 +62,7 @@ const Product = ({ item }) => {
           fontSize={".85rem"}
           backgroundColor={"teal"}
           color={"#fff"}
+          clickHandler={addItemToCart}
         >
           Add to Cart
         </Button>

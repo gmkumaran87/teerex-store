@@ -1,6 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { Cart } from "./icons";
+import { CartIcon } from "./icons";
 
 const Nav = styled.nav`
   height: 70px;
@@ -9,7 +10,7 @@ const Nav = styled.nav`
 `;
 
 const Wrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,6 +24,7 @@ const Right = styled.div`
   flex: 30%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const H3 = styled.h3`
@@ -31,6 +33,22 @@ const H3 = styled.h3`
   color: teal;
 `;
 
+const UL = styled.ul`
+  display: flex;
+  flex-flow: "row nowrap";
+  align-items: center;
+  padding: 0;
+  margin: 0;
+`;
+const List = styled.li`
+  list-style-type: none;
+  margin-right: 1rem;
+
+  & a {
+    color: teal;
+    font-weight: 500;
+  }
+`;
 const Navbar = () => {
   return (
     <Nav>
@@ -39,7 +57,16 @@ const Navbar = () => {
           <H3>Teerex Store</H3>
         </Left>
         <Right>
-          <Cart />
+          <UL>
+            <List>
+              <NavLink to="/">Products</NavLink>
+            </List>
+            <List>
+              <NavLink to="/cart">
+                <CartIcon />
+              </NavLink>
+            </List>
+          </UL>
         </Right>
       </Wrapper>
     </Nav>

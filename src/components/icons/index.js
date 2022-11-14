@@ -1,5 +1,5 @@
-import Cart from "./Cart";
+import CartIcon from "./CartIcon";
 import Filter from "./Filter";
 import Search from "./Search";
 
-export { Cart, Search, Filter };
+export { CartIcon, Search, Filter };

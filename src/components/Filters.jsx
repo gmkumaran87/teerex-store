@@ -35,8 +35,8 @@ const Heading = styled.h3`
 const Filters = ({ colors, types, price, gender }) => {
   const filterProducts = useProductContext((state) => state.filterProducts);
   const removeFilters = useProductContext((state) => state.removeFilters);
-  const filterOptions = useProductContext((state) => state.filterOptions);
-  const filterOrder = useProductContext((state) => state.filterOrder);
+  // const filterOptions = useProductContext((state) => state.filterOptions);
+  // const filterOrder = useProductContext((state) => state.filterOrder);
 
   const [focusbox, setFocusBox] = useState(colors);
   const [priceValues, setPriceValues] = useState(price);
@@ -97,7 +97,7 @@ const Filters = ({ colors, types, price, gender }) => {
   };
 
   const handleGender = (index, isChecked) => {
-    console.log("Gender", index, isChecked, genderValues);
+    // console.log("Gender", index, isChecked, genderValues);
     const filteredGender = genderValues[index].name;
 
     setGenderValues(
@@ -111,10 +111,10 @@ const Filters = ({ colors, types, price, gender }) => {
     }
   };
 
-  console.log("Filter color", {
+  /*console.log("Filter color", {
     filterOptions,
     filterOrder,
-  });
+  });*/
   return (
     <AsideWrapper>
       <FormControl>

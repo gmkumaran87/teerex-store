@@ -8,16 +8,21 @@ const initialValues = {
   products: [],
   fProducts: [],
   filterOptions: {
-    colors: new Set(),
+    color: new Set(),
     price: new Set(),
     type: new Set(),
     gender: new Set(),
   },
+  cartItems: [],
 };
 
 const useStore = () => {
   const [state, dispatch] = useReducer(productsReducer, initialValues);
 
+  const searchProduct = (value) => {
+    console.log("Search Product", value);
+    dispatch({ type: "SEARCH_PRODUCT", payload: value });
+  };
   const addProducts = (value) => {
     dispatch({ type: "ADD_PRODUCTS", payload: value });
   };
@@ -33,11 +38,17 @@ const useStore = () => {
     dispatch({ type: "REMOVE_FILTER_OPTIONS", payload: { attribute, value } });
     dispatch({ type: "FILTER_PRODUCTS", payload: value });
   };
+
+  const addToCart = (value) => {
+    dispatch({ type: "ADD_ITEM", payload: value });
+  };
   return {
     ...state,
     addProducts,
     filterProducts /*: useCallback(() => addProducts, [])*/,
     removeFilters,
+    searchProduct,
+    addToCart,
   };
 };
 

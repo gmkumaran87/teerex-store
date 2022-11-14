@@ -1,5 +1,26 @@
+import { createFilteredProductsArray } from "../common/helper";
+
 const productsReducer = (state, action) => {
   switch (action.type) {
+    case "SEARCH_PRODUCT": {
+      let products = [];
+      if (!action.payload) {
+        products = state.products;
+      } else {
+        const searchValue = action.payload?.toLowerCase();
+        products = state.products.filter(
+          (el) =>
+            el.name?.toLowerCase().includes(searchValue) ||
+            el.color?.toLowerCase().includes(searchValue) ||
+            el.type?.toLowerCase().includes(searchValue)
+        );
+      }
+
+      return {
+        ...state,
+        fProducts: products,
+      };
+    }
     case "ADD_PRODUCTS":
       return {
         ...state,
@@ -27,7 +48,7 @@ const productsReducer = (state, action) => {
       const filterOrder = state.filterOrder;
 
       if (attribute === "color") {
-        const colorSet = state.filterOptions.colors;
+        const colorSet = state.filterOptions.color;
 
         if (colorSet.size === 0) {
           filterOrder.delete(attribute);
@@ -61,15 +82,15 @@ const productsReducer = (state, action) => {
     case "SET_FILTER_OPTIONS": {
       const { attribute, value } = action.payload;
 
-      let { colors, type, gender, price } = state.filterOptions;
+      let { color, type, gender, price } = state.filterOptions;
 
       if (attribute === "color") {
-        colors.add(value);
+        color.add(value);
       } else if (attribute === "type") {
         type.add(value);
       } else if (attribute === "price") {
         price.add(value);
-      } else {
+      } else if (attribute === "gender") {
         gender.add(value);
       }
 
@@ -79,22 +100,22 @@ const productsReducer = (state, action) => {
           type,
           price,
           gender,
-          colors,
+          color,
         },
       };
     }
     case "REMOVE_FILTER_OPTIONS": {
       const { attribute, value } = action.payload;
 
-      let { colors, type, gender, price } = state.filterOptions;
+      let { color, type, gender, price } = state.filterOptions;
 
       if (attribute === "color") {
-        colors.delete(value);
+        color.delete(value);
       } else if (attribute === "type") {
         type.delete(value);
       } else if (attribute === "price") {
         price.delete(value);
-      } else {
+      } else if (attribute === "gender") {
         gender.delete(value);
       }
       return {
@@ -103,39 +124,36 @@ const productsReducer = (state, action) => {
           type,
           price,
           gender,
-          colors,
+          color,
         },
       };
     }
     case "FILTER_PRODUCTS": {
-      // let { colors, type, gender, price } = state.filterOptions;
-
+      // let { color, type, gender, price } = state.filterOptions;
+      const products = [...state.products];
       let order = state.filterOrder;
 
       let filteredProducts = [];
 
-      for (let keys of order.keys()) {
-        console.log("Filter PRoducts", keys);
-      }
-
-      console.log("Filter Products", order);
-      const filters = state.filterOptions.colors;
-
-      if (filters.size === 0) {
+      if (order.size === 0) {
         filteredProducts = state.products;
       } else {
-        let setValues = filters.values();
-        let iter = setValues.next().value;
+        // If we have filters
+        for (let [key, value] of order.entries()) {
+          if (value === 1) {
+            filteredProducts = products;
+          }
 
-        // console.log("Filtering Products", filters, setValues, iter);
-        while (iter) {
-          const product = state?.products?.filter((el) => el.color === iter);
-          filteredProducts.push(...product);
-          iter = setValues.next().value;
-          // console.log("Inside WHILE", { product, iter, filteredProducts });
+          filteredProducts = createFilteredProductsArray(
+            filteredProducts,
+            state.filterOptions,
+            key
+          );
         }
-      }
 
+        // console.log("Filter Products", order);
+        // const filters = state.filterOptions.color;
+      }
       return {
         ...state,
         fProducts: filteredProducts,
@@ -146,8 +164,18 @@ const productsReducer = (state, action) => {
         ...state,
         filterOptions: {
           ...state.filterOptions,
-          colors: action.payload.value,
+          color: action.payload.value,
         },
+      };
+    }
+    case "ADD_ITEM": {
+      const selectedItem = state.fProducts.filter(
+        (el) => el.id === action.payload
+      );
+      const outArr = [...state.cartItems, ...selectedItem];
+      return {
+        ...state,
+        cartItems: outArr,
       };
     }
     default:

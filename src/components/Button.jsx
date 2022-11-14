@@ -12,15 +12,17 @@ const ButtonElement = styled.button`
   cursor: ${({ cursor, disabled }) =>
     !disabled ? cursor || "pointer" : "not-allowed"};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
-  font-weight: ${({ fontWeight }) => fontWeight || "700"};
+  font-weight: ${({ fontWeight }) => fontWeight || "500"};
 
   border: ${({ border }) => border || "none"};
+  border-radius: ${({ borderRadius }) => borderRadius || "unset"};
 `;
 
 const Button = ({
   disabled,
   type,
   backgroundColor,
+  borderRadius,
   color,
   padding,
   children,
@@ -29,6 +31,7 @@ const Button = ({
   height,
   cursor,
   fontSize,
+  clickHandler,
 }) => {
   return (
     <ButtonElement
@@ -42,6 +45,8 @@ const Button = ({
       height={height}
       cursor={cursor}
       fontSize={fontSize}
+      onClick={clickHandler}
+      borderRadius={borderRadius}
     >
       {children}
     </ButtonElement>
@@ -60,6 +65,8 @@ Button.propTypes = {
   cursor: PropTypes.string,
   fontSize: PropTypes.string,
   children: PropTypes.node.isRequired,
+  clickHandler: PropTypes.func,
+  borderRadius: PropTypes.string,
 };
 
 export default Button;

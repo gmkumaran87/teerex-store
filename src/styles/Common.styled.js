@@ -21,6 +21,7 @@ export const Para = styled.p `
   font-family: "Ubuntu", sans-serif;
   line-height: ${({ lineHeight }) => lineHeight || "unset"};
   font-size: ${({ fontSize }) => fontSize || "1.25rem"};
+  font-weight: ${({ fontWeight }) => fontWeight || "unset"};
   text-align: ${({ textAlign }) => textAlign};
   margin: ${({ margin }) => margin || "unset"};
   /* padding-right: 4rem; */
