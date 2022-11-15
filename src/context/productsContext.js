@@ -42,6 +42,14 @@ const useStore = () => {
   const addToCart = (value) => {
     dispatch({ type: "ADD_ITEM", payload: value });
   };
+
+  const incrmtCartItem = (value) => {
+    dispatch({ type: "INCREMENT_ITEM", payload: value });
+  };
+
+  const decrmtCartItem = (value) => {
+    dispatch({ type: "DECREMENT_ITEM", payload: value });
+  };
   return {
     ...state,
     addProducts,
@@ -49,6 +57,8 @@ const useStore = () => {
     removeFilters,
     searchProduct,
     addToCart,
+    incrmtCartItem,
+    decrmtCartItem,
   };
 };
 

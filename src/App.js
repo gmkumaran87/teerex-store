@@ -28,7 +28,7 @@ function App() {
       selectedQty: 0,
     }));
     addProducts(convertedProducts);
-    console.log("ADding products in useEffect");
+    // console.log("ADding products in useEffect");
   }, [products]);
 
   return (

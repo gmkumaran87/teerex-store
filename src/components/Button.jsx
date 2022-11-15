@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const ButtonElement = styled.button`
   background-color: ${({ backgroundColor, theme }) =>
-    backgroundColor === "teal" ? theme.teal : "blue"};
+    backgroundColor === "teal" ? theme.teal : backgroundColor};
   color: ${({ color }) => color};
   padding: ${({ padding }) => padding};
   width: ${({ width }) => width || "auto"};
@@ -33,6 +33,7 @@ const Button = ({
   fontSize,
   clickHandler,
 }) => {
+  console.log("Button handler", clickHandler);
   return (
     <ButtonElement
       disabled={disabled}

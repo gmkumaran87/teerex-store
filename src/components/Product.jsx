@@ -5,6 +5,7 @@ import { Flex } from "../styles/Common.styled";
 import Button from "./Button";
 import { laptop } from "../styles/responsive";
 import { useProductContext } from "../context/productsContext";
+import CartButton from "./CartButton";
 
 const Card = styled.article`
   display: flex;
@@ -38,13 +39,19 @@ const Image = styled.img`
 `;
 
 const Product = ({ item }) => {
-  const { name, imageURL, price, id, isSelected, isSelectedQty } = item;
-  // console.log("Products", name, imageURL);
+  const { name, imageURL, price, id, isSelected, selectedQty } = item;
+
   const addToCart = useProductContext((state) => state.addToCart);
+  const incrmtCartItem = useProductContext((s) => s.incrmtCartItem);
+  const decrmtCartItem = useProductContext((s) => s.decrmtCartItem);
+
   const addItemToCart = () => {
-    console.log("ADding item", id);
     addToCart(id);
   };
+
+  const incrementCartItem = () => incrmtCartItem(id);
+
+  const decrementCartItem = () => decrmtCartItem(id);
   return (
     <Card>
       <Heading>{name}</Heading>
@@ -57,11 +64,11 @@ const Product = ({ item }) => {
       >
         <Heading>{`Rs.${price}`}</Heading>
         {isSelected ? (
-          <>
-            <button>+</button>
-            <span>{isSelectedQty}</span>
-            <button>-</button>
-          </>
+          <CartButton
+            selectedQty={selectedQty}
+            incrementCartItem={incrementCartItem}
+            decrementCartItem={decrementCartItem}
+          />
         ) : (
           <Button
             height={"30px"}

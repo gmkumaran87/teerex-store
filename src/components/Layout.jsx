@@ -6,8 +6,12 @@ import { laptop } from "../styles/responsive";
 
 const Wrapper = styled.section`
   padding: 0.51rem;
+  background-color: #f7f8fb;
   ${laptop({
     padding: "1.5rem",
+    height: "calc(100vh - 70px)",
+    display: "flex",
+    justifyContent: "center",
   })}
 `;
 
