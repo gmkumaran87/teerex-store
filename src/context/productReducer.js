@@ -173,7 +173,7 @@ const productsReducer = (state, action) => {
 
       const products = existingProducts.map((el) =>
         el.id === action.payload
-          ? { ...el, isSelected: true, isSelectedQty: el.selectedQty + 1 }
+          ? { ...el, isSelected: true, selectedQty: el.selectedQty + 1 }
           : el
       );
       const selectedItem = products.filter((el) => el.id === action.payload);
@@ -182,6 +182,35 @@ const productsReducer = (state, action) => {
         ...state,
         fProducts: products,
         cartItems: outArr,
+      };
+    }
+    case "INCREMENT_ITEM": {
+      const existingProduct = state.fProducts;
+      const cartProducts = state.cartItems;
+
+      const fProducts = existingProduct.map((el) => {
+        if (el.id === action.payload) {
+          if (el.quantity > el.selectedQty) {
+            return { ...el, selectedQty: el.selectedQty + 1 };
+          }
+        } else {
+          return el;
+        }
+      });
+      const selectedItem = cartProducts.map((el) => {
+        if (el.id === action.payload) {
+          if (el.quantity > el.selectedQty) {
+            return { ...el, selectedQty: el.selectedQty + 1 };
+          }
+        } else {
+          return el;
+        }
+      });
+
+      return {
+        ...state,
+        fProducts: fProducts,
+        cartItems: selectedItem,
       };
     }
     default:
