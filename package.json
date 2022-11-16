@@ -1,4 +1,5 @@
 {
+    "homepage": "http://gmkumaran87.github.io/teerex-store",
     "name": "teerex-store",
     "version": "0.1.0",
     "private": true,
@@ -22,6 +23,8 @@
     },
     "scripts": {
         "start": "react-scripts start",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -53,6 +56,7 @@
         "eslint-plugin-jsx-a11y": "^6.6.1",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react": "^7.31.10",
+        "gh-pages": "^4.0.0",
         "prettier": "^2.7.1"
     }
 }

@@ -26,6 +26,7 @@ function App() {
       ...el,
       isSelected: false,
       selectedQty: 0,
+      amount: 0,
     }));
     addProducts(convertedProducts);
     // console.log("ADding products in useEffect");
@@ -44,7 +45,7 @@ function App() {
               <Route element={<Layout />}>
                 <Route path="/header" element={<Header />} />{" "}
                 <Route path="/" element={<Products products={products} />} />{" "}
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<Cart />} />{" "}
               </Route>{" "}
             </Routes>{" "}
           </Router>{" "}

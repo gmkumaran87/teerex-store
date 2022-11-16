@@ -2,11 +2,16 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 // import PropTypes from 'prop-types'
 import styled from "styled-components";
-import { laptop } from "../styles/responsive";
+import { laptop, tablet } from "../styles/responsive";
 
 const Wrapper = styled.section`
   padding: 0.51rem;
   background-color: #f7f8fb;
+
+  ${tablet({
+    display: "flex",
+    justifyContent: "center",
+  })}
   ${laptop({
     padding: "1.5rem",
     height: "calc(100vh - 70px)",

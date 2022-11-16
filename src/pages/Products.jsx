@@ -31,8 +31,10 @@ const Wrapper = styled.section`
     gridTemplateColumns: "1fr 1fr",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    padding: "0 2rem",
+    padding: "0 2rem ",
     gap: "2rem",
+    overflow: "auto",
+    paddingBottom: "1rem",
   })}
 
   ${desktop({
@@ -45,10 +47,14 @@ const ItemsWrapper = styled.main`
   display: grid;
   grid-template-columns: 1fr;
   width: 100%;
+  overflow: auto;
 
   ${laptop({
     flexFlow: "row nowrap",
     gridTemplateColumns: "250px 1fr",
+    height: "100vh",
+    // overflow: "auto",
+    padding: "2rem 0",
   })};
 `;
 const Products = ({ products }) => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { tablet } from "../styles/responsive";
 import { CartIcon } from "./icons";
 
 const Nav = styled.nav`
@@ -10,10 +11,14 @@ const Nav = styled.nav`
 `;
 
 const Wrapper = styled.div`
-  padding: 1rem 1.5rem;
+  padding: 1rem 0.51rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  ${tablet({
+    padding: "1rem 1.5rem",
+  })}
 `;
 
 const Left = styled.div`
@@ -39,6 +44,9 @@ const UL = styled.ul`
   align-items: center;
   padding: 0;
   margin: 0;
+  ${tablet({
+    fontSize: "1.25rem",
+  })}
 `;
 const List = styled.li`
   list-style-type: none;

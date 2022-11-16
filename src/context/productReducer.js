@@ -168,14 +168,39 @@ const productsReducer = (state, action) => {
         },
       };
     }
+    case "REMOVE_ITEM": {
+      const existingProduct = state.fProducts;
+      const cartProducts = state.cartItems;
+
+      const products = existingProduct.map((item) => {
+        return item.id === action.payload
+          ? { ...item, isSelected: false, selectedQty: 0, amount: 0 }
+          : item;
+      });
+      const removeItem = cartProducts.filter(
+        (item) => item.id !== action.payload
+      );
+      console.log("Remove Item", removeItem, products, action.payload);
+      return {
+        ...state,
+        cartItems: removeItem,
+        fProducts: products,
+      };
+    }
     case "ADD_ITEM": {
       const existingProducts = state.fProducts;
 
       const products = existingProducts.map((el) =>
         el.id === action.payload
-          ? { ...el, isSelected: true, selectedQty: el.selectedQty + 1 }
+          ? {
+              ...el,
+              isSelected: true,
+              selectedQty: el.selectedQty + 1,
+              amount: el.price * 1,
+            }
           : el
       );
+      console.log("After adding Item", products);
       const selectedItem = products.filter((el) => el.id === action.payload);
       const outArr = [...state.cartItems, ...selectedItem];
       return {
@@ -191,7 +216,11 @@ const productsReducer = (state, action) => {
       const fProducts = existingProduct.map((el) => {
         if (el.id === action.payload) {
           if (el.quantity > el.selectedQty) {
-            return { ...el, selectedQty: el.selectedQty + 1 };
+            return {
+              ...el,
+              selectedQty: el.selectedQty + 1,
+              amount: el.price * (el.selectedQty + 1),
+            };
           }
         } else {
           return el;
@@ -200,7 +229,11 @@ const productsReducer = (state, action) => {
       const selectedItem = cartProducts.map((el) => {
         if (el.id === action.payload) {
           if (el.quantity > el.selectedQty) {
-            return { ...el, selectedQty: el.selectedQty + 1 };
+            return {
+              ...el,
+              selectedQty: el.selectedQty + 1,
+              amount: el.price * (el.selectedQty + 1),
+            };
           }
         } else {
           return el;
@@ -211,6 +244,55 @@ const productsReducer = (state, action) => {
         ...state,
         fProducts: fProducts,
         cartItems: selectedItem,
+      };
+    }
+    case "DECREMENT_ITEM": {
+      const existingProduct = state.fProducts;
+      const cartProducts = state.cartItems;
+
+      const fProducts = existingProduct.map((el) => {
+        if (el.id === action.payload) {
+          if (el.selectedQty > 1) {
+            return {
+              ...el,
+              selectedQty: el.selectedQty - 1,
+              amount: el.price * (el.selectedQty - 1),
+            };
+          } else {
+            return { ...el, selectedQty: 0, amount: 0, isSelected: false };
+          }
+        } else {
+          return el;
+        }
+      });
+      const itemRemove = cartProducts.find(
+        (item) => item.id === action.payload && item.selectedQty === 1
+      );
+      let selectedItems = [];
+      if (itemRemove) {
+        selectedItems = cartProducts.filter(
+          (item) => item.id !== action.payload
+        );
+      } else {
+        selectedItems = cartProducts.map((el) => {
+          if (el.id === action.payload) {
+            if (el.selectedQty > 0) {
+              return {
+                ...el,
+                selectedQty: el.selectedQty - 1,
+                amount: el.price * (el.selectedQty - 1),
+              };
+            }
+          } else {
+            return el;
+          }
+        });
+      }
+
+      return {
+        ...state,
+        fProducts: fProducts,
+        cartItems: selectedItems,
       };
     }
     default:

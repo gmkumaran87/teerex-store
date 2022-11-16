@@ -33,7 +33,6 @@ const Button = ({
   fontSize,
   clickHandler,
 }) => {
-  console.log("Button handler", clickHandler);
   return (
     <ButtonElement
       disabled={disabled}

@@ -50,6 +50,8 @@ const useStore = () => {
   const decrmtCartItem = (value) => {
     dispatch({ type: "DECREMENT_ITEM", payload: value });
   };
+  const removeFromCart = (value) =>
+    dispatch({ type: "REMOVE_ITEM", payload: value });
   return {
     ...state,
     addProducts,
@@ -59,6 +61,7 @@ const useStore = () => {
     addToCart,
     incrmtCartItem,
     decrmtCartItem,
+    removeFromCart,
   };
 };
 
