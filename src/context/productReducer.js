@@ -295,6 +295,15 @@ const productsReducer = (state, action) => {
         cartItems: selectedItems,
       };
     }
+    case "SET_ERROR": {
+      return {
+        ...state,
+        error: {
+          ...state.error,
+          msg: action.payload,
+        },
+      };
+    }
     default:
       throw new Error("No matching actions found");
   }

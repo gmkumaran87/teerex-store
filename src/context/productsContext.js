@@ -14,6 +14,9 @@ const initialValues = {
     gender: new Set(),
   },
   cartItems: [],
+  error: {
+    msg: "",
+  },
 };
 
 const useStore = () => {
@@ -52,6 +55,9 @@ const useStore = () => {
   };
   const removeFromCart = (value) =>
     dispatch({ type: "REMOVE_ITEM", payload: value });
+
+  const setErrorMsg = (value) =>
+    dispatch({ type: "SET_ERROR", payload: value });
   return {
     ...state,
     addProducts,
@@ -62,6 +68,7 @@ const useStore = () => {
     incrmtCartItem,
     decrmtCartItem,
     removeFromCart,
+    setErrorMsg,
   };
 };
 

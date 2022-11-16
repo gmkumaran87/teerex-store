@@ -67,7 +67,7 @@ const Navbar = () => {
         <Right>
           <UL>
             <List>
-              <NavLink to="/">Products</NavLink>
+              <NavLink to="/teerex-store">Products</NavLink>
             </List>
             <List>
               <NavLink to="/cart">

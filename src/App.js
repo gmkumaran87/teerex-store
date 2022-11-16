@@ -27,6 +27,7 @@ function App() {
       isSelected: false,
       selectedQty: 0,
       amount: 0,
+      errorMsg: "",
     }));
     addProducts(convertedProducts);
     // console.log("ADding products in useEffect");
@@ -44,7 +45,10 @@ function App() {
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/header" element={<Header />} />{" "}
-                <Route path="/" element={<Products products={products} />} />{" "}
+                <Route
+                  path="/teerex-store"
+                  element={<Products products={products} />}
+                />{" "}
                 <Route path="/cart" element={<Cart />} />{" "}
               </Route>{" "}
             </Routes>{" "}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "styled-components";
@@ -57,8 +57,18 @@ const ItemsWrapper = styled.main`
     padding: "2rem 0",
   })};
 `;
+const ErrorMsg = styled.p`
+  color: red;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin: 0 auto;
+`;
+
 const Products = ({ products }) => {
   const filteredProducts = useProductContext((state) => state.fProducts);
+  const error = useProductContext((s) => s.error);
+  const setErrorMsg = useProductContext((state) => state.setErrorMsg);
 
   const { colorsArray, typesArray, priceArray } = createCheckboxItems(products);
 
@@ -68,9 +78,19 @@ const Products = ({ products }) => {
   const content = finalProducts.map((el) => <Product key={el.id} item={el} />);
 
   console.log("Products", filteredProducts);
+
+  useEffect(() => {
+    if (error.msg.length > 0) {
+      setTimeout(() => {
+        setErrorMsg("");
+        // setIsError(true);
+      }, 3000);
+    }
+  }, [error.msg]);
   return (
     <Flex direction="column nowrap" gap="2rem" width="100%">
       <Header />
+      {error.msg.length > 0 && <ErrorMsg>{error.msg}</ErrorMsg>}
       <ItemsWrapper>
         <ErrorBoundary fallback={<h3>Filters are not available</h3>}>
           <Filters

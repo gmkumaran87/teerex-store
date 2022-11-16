@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Flex } from "../styles/Common.styled";
+import { Flex, Para } from "../styles/Common.styled";
 import Button from "./Button";
 import { laptop } from "../styles/responsive";
 import { useProductContext } from "../context/productsContext";
@@ -39,17 +39,28 @@ const Image = styled.img`
 `;
 
 const Product = ({ item }) => {
-  const { name, imageURL, price, id, isSelected, selectedQty } = item;
+  const { name, imageURL, price, id, isSelected, selectedQty, quantity } = item;
 
   const addToCart = useProductContext((state) => state.addToCart);
   const incrmtCartItem = useProductContext((s) => s.incrmtCartItem);
   const decrmtCartItem = useProductContext((s) => s.decrmtCartItem);
+  const setErrorMsg = useProductContext((state) => state.setErrorMsg);
 
   const addItemToCart = () => {
-    addToCart(id);
+    if (quantity === selectedQty) {
+      setErrorMsg("No stock available");
+    } else {
+      addToCart(id);
+    }
   };
 
-  const incrementCartItem = () => incrmtCartItem(id);
+  const incrementCartItem = () => {
+    if (quantity === selectedQty) {
+      setErrorMsg("No Stocks avaialble");
+    } else {
+      incrmtCartItem(id);
+    }
+  };
 
   const decrementCartItem = () => decrmtCartItem(id);
   return (
@@ -63,6 +74,7 @@ const Product = ({ item }) => {
         padding=".5rem"
       >
         <Heading>{`Rs.${price}`}</Heading>
+        <Para>{item.quantity}</Para>
         {isSelected ? (
           <CartButton
             selectedQty={selectedQty}

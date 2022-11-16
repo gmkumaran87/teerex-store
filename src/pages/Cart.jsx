@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
 import CartButton from "../components/CartButton";
@@ -78,6 +78,15 @@ const ParaRuppee = styled.span`
     content: "₹ ";
   }
 `;
+
+const ErrorMsg = styled.p`
+  color: red;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin: 0 auto;
+`;
+
 const Cart = () => {
   const cartItems = useProductContext((state) => state.cartItems);
 
@@ -85,12 +94,33 @@ const Cart = () => {
   const decrmtCartItem = useProductContext((s) => s.decrmtCartItem);
 
   const removeFromCart = useProductContext((state) => state.removeFromCart);
-  const incrementCartItem = (id) => incrmtCartItem(id);
 
-  const decrementCartItem = (id) => decrmtCartItem(id);
+  const setErrorMsg = useProductContext((state) => state.setErrorMsg);
+  const error = useProductContext((s) => s.error);
+  // const [isError, setIsError] = useState(null);
+
+  const incrementCartItem = (indx, id) => {
+    console.log("Incrementing the items", cartItems[id], cartItems, id);
+    if (cartItems[indx].quantity === cartItems[indx].selectedQty) {
+      setErrorMsg("No stocks available");
+      // setIsError(true);
+    } else {
+      incrmtCartItem(id);
+    }
+  };
+
+  useEffect(() => {
+    if (error.msg.length > 0) {
+      setTimeout(() => {
+        setErrorMsg("");
+        // setIsError(true);
+      }, 3000);
+    }
+  }, [error.msg]);
+  const decrementCartItem = (indx, id) => decrmtCartItem(id);
 
   const removeCartItem = (id) => removeFromCart(id);
-  console.log("CartItems", cartItems);
+  console.log("CartItems", cartItems, error);
 
   const totalAmount =
     cartItems.length > 0
@@ -108,7 +138,9 @@ const Cart = () => {
         <>
           <Heading>Shopping Cart</Heading>
           {/* <CartBody> */}
-          {cartItems?.map((el) => (
+          {error.msg.length > 0 && <ErrorMsg>{error.msg}</ErrorMsg>}
+
+          {cartItems?.map((el, index) => (
             <CartItem key={el.id}>
               <Flex gap="1rem" alignItems="flex-start" height="100%">
                 <Image src={el.imageURL} />
@@ -135,8 +167,8 @@ const Cart = () => {
                 <ParaRuppee>{el.amount}</ParaRuppee>
                 <CartButton
                   selectedQty={el.selectedQty}
-                  incrementCartItem={() => incrementCartItem(el.id)}
-                  decrementCartItem={() => decrementCartItem(el.id)}
+                  incrementCartItem={() => incrementCartItem(index, el.id)}
+                  decrementCartItem={() => decrementCartItem(index, el.id)}
                 />
                 <Button
                   backgroundColor="teal"
