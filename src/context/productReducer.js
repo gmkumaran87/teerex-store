@@ -1,4 +1,4 @@
-import { createFilteredProductsArray } from "../common/helper";
+import { createFilteredProductsArray, paginate } from "../common/helper";
 
 const productsReducer = (state, action) => {
   switch (action.type) {
@@ -19,6 +19,7 @@ const productsReducer = (state, action) => {
       return {
         ...state,
         fProducts: products,
+        pagination: paginate(products),
       };
     }
     case "ADD_PRODUCTS":
@@ -26,6 +27,7 @@ const productsReducer = (state, action) => {
         ...state,
         products: action.payload,
         fProducts: action.payload,
+        pagination: paginate(action.payload),
       };
 
     case "SET_FILTER_ORDER": {
@@ -157,6 +159,7 @@ const productsReducer = (state, action) => {
       return {
         ...state,
         fProducts: filteredProducts,
+        pagination: paginate(filteredProducts),
       };
     }
     case "REMOVE_FILTERS": {
@@ -168,7 +171,7 @@ const productsReducer = (state, action) => {
         },
       };
     }
-    case "REMOVE_ITEM": {
+    case "REMOVE_CART_ITEM": {
       const existingProduct = state.fProducts;
       const cartProducts = state.cartItems;
 
@@ -185,9 +188,10 @@ const productsReducer = (state, action) => {
         ...state,
         cartItems: removeItem,
         fProducts: products,
+        pagination: paginate(products),
       };
     }
-    case "ADD_ITEM": {
+    case "ADD_CART_ITEM": {
       const existingProducts = state.fProducts;
 
       const products = existingProducts.map((el) =>
@@ -200,13 +204,13 @@ const productsReducer = (state, action) => {
             }
           : el
       );
-      console.log("After adding Item", products);
       const selectedItem = products.filter((el) => el.id === action.payload);
       const outArr = [...state.cartItems, ...selectedItem];
       return {
         ...state,
         fProducts: products,
         cartItems: outArr,
+        pagination: paginate(products),
       };
     }
     case "INCREMENT_ITEM": {
@@ -244,6 +248,7 @@ const productsReducer = (state, action) => {
         ...state,
         fProducts: fProducts,
         cartItems: selectedItem,
+        pagination: paginate(fProducts),
       };
     }
     case "DECREMENT_ITEM": {
@@ -293,6 +298,7 @@ const productsReducer = (state, action) => {
         ...state,
         fProducts: fProducts,
         cartItems: selectedItems,
+        pagination: paginate(fProducts),
       };
     }
     case "SET_ERROR": {
@@ -302,6 +308,12 @@ const productsReducer = (state, action) => {
           ...state.error,
           msg: action.payload,
         },
+      };
+    }
+    case "SET_PAGE": {
+      return {
+        ...state,
+        currPage: action.payload,
       };
     }
     default:

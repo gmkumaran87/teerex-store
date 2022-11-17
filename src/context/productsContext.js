@@ -17,6 +17,8 @@ const initialValues = {
   error: {
     msg: "",
   },
+  pagination: new Map(),
+  currPage: 1,
 };
 
 const useStore = () => {
@@ -43,7 +45,7 @@ const useStore = () => {
   };
 
   const addToCart = (value) => {
-    dispatch({ type: "ADD_ITEM", payload: value });
+    dispatch({ type: "ADD_CART_ITEM", payload: value });
   };
 
   const incrmtCartItem = (value) => {
@@ -54,10 +56,12 @@ const useStore = () => {
     dispatch({ type: "DECREMENT_ITEM", payload: value });
   };
   const removeFromCart = (value) =>
-    dispatch({ type: "REMOVE_ITEM", payload: value });
+    dispatch({ type: "REMOVE_CART_ITEM", payload: value });
 
   const setErrorMsg = (value) =>
     dispatch({ type: "SET_ERROR", payload: value });
+
+  const handlePage = (page) => dispatch({ type: "SET_PAGE", payload: page });
   return {
     ...state,
     addProducts,
@@ -69,6 +73,7 @@ const useStore = () => {
     decrmtCartItem,
     removeFromCart,
     setErrorMsg,
+    handlePage,
   };
 };
 

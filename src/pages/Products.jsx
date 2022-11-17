@@ -9,9 +9,10 @@ import Header from "../components/Header";
 import Product from "../components/Product";
 import { useProductContext } from "../context/productsContext";
 import { Flex } from "../styles/Common.styled";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 import { laptop, tablet, desktop } from "../styles/responsive";
+import Pagination from "../components/Pagination";
 
 const Wrapper = styled.section`
   display: flex;
@@ -27,19 +28,23 @@ const Wrapper = styled.section`
   })}
 
   ${laptop({
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    display: "flex",
+    // gridTemplateColumns: "1fr 1fr",
+    flexFlow: "row wrap",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     padding: "0 2rem ",
     gap: "2rem",
-    overflow: "auto",
+    // overflow: "auto",
     paddingBottom: "1rem",
   })}
 
   ${desktop({
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    // gridTemplateColumns: "1fr 1fr 1fr",
     padding: "0 3rem",
   })}
 `;
@@ -65,7 +70,7 @@ const ErrorMsg = styled.p`
   margin: 0 auto;
 `;
 
-const Products = ({ products }) => {
+const Products = ({ products, currPageItems, pages }) => {
   const filteredProducts = useProductContext((state) => state.fProducts);
   const error = useProductContext((s) => s.error);
   const setErrorMsg = useProductContext((state) => state.setErrorMsg);
@@ -73,7 +78,7 @@ const Products = ({ products }) => {
   const { colorsArray, typesArray, priceArray } = createCheckboxItems(products);
 
   // console.log("Checkboxes", colorsArray, typesArray, priceArray);
-  const finalProducts = filteredProducts || products;
+  const finalProducts = currPageItems || filteredProducts || products;
 
   const content = finalProducts.map((el) => <Product key={el.id} item={el} />);
 
@@ -88,7 +93,7 @@ const Products = ({ products }) => {
     }
   }, [error.msg]);
   return (
-    <Flex direction="column nowrap" gap="2rem" width="100%">
+    <Flex direction="column nowrap" gap="1rem" width="100%">
       <Header />
       {error.msg.length > 0 && <ErrorMsg>{error.msg}</ErrorMsg>}
       <ItemsWrapper>
@@ -102,10 +107,14 @@ const Products = ({ products }) => {
         </ErrorBoundary>
         <Wrapper>{content}</Wrapper>
       </ItemsWrapper>
+      {pages > 1 && <Pagination pages={pages} />}
     </Flex>
   );
 };
 
-Products.propTypes = {};
+Products.propTypes = {
+  currPageItems: PropTypes.array,
+  products: PropTypes.array,
+};
 
 export default Products;

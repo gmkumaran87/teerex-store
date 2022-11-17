@@ -15,7 +15,7 @@ const AsideWrapper = styled.aside`
     flex: "2",
     display: "flex",
     padding: "1rem 2rem",
-    height: "100vh",
+    // height: "100vh",
     overflow: "auto",
   })}
 `;

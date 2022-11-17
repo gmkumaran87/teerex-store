@@ -19,6 +19,10 @@ const resource = fetchData();
 function App() {
   const addProducts = useProductContext((state) => state.addProducts);
 
+  const pagination = useProductContext((state) => state.pagination);
+
+  const currPage = useProductContext((s) => s.currPage);
+
   const products = resource?.products?.read();
 
   useEffect(() => {
@@ -33,6 +37,9 @@ function App() {
     // console.log("ADding products in useEffect");
   }, [products]);
 
+  const currPageItems = pagination?.get(currPage);
+
+  console.log("Pages", { pagination, pages: pagination.size, currPage });
   return (
     <ErrorBoundary fallback={<h1> Something went wrong please try again </h1>}>
       {" "}
@@ -47,7 +54,13 @@ function App() {
                 <Route path="/header" element={<Header />} />{" "}
                 <Route
                   path="/teerex-store"
-                  element={<Products products={products} />}
+                  element={
+                    <Products
+                      products={products}
+                      currPageItems={currPageItems}
+                      pages={pagination.size}
+                    />
+                  }
                 />{" "}
                 <Route path="/cart" element={<Cart />} />{" "}
               </Route>{" "}

@@ -17,9 +17,10 @@ const Card = styled.article`
   box-shadow: ${({ theme }) => theme.boxShadow};
   padding: 0.51rem;
   height: auto;
+  border-radius: 3px;
   background-color: ${({ theme }) => theme.backgroundBlue};
   ${laptop({
-    width: "310px",
+    width: "280px",
   })}
 `;
 
