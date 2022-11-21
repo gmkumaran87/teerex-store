@@ -15,6 +15,7 @@ export const Flex = styled.div `
   margin: ${({ margin }) => margin || "0"};
   padding: ${({ padding }) => padding || "unset"};
   flex: ${({ flex }) => flex || "unset"};
+  position: ${({ position }) => position || "unset"};
 `;
 
 export const Para = styled.p `
@@ -42,5 +43,12 @@ export const InputEl = styled.input `
     font-weight: 500;
     font-size: 1rem;
   }
+`;
+
+export const SpanEl = styled.span `
+  position: ${({ position }) => position || "unset"};
+  top: ${({ top }) => top || "unset"};
+  left: ${({ left }) => left || "unset"};
+  font-weight: ${({ fontWeight }) => fontWeight || "unset"};
 `;
 // ${({ theme }) => theme.backgroundBlue}

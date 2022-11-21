@@ -8,7 +8,7 @@ import Filters from "../components/Filters";
 import Header from "../components/Header";
 import Product from "../components/Product";
 import { useProductContext } from "../context/productsContext";
-import { Flex } from "../styles/Common.styled";
+import { Flex, Para } from "../styles/Common.styled";
 import PropTypes from "prop-types";
 
 import { laptop, tablet, desktop } from "../styles/responsive";
@@ -93,9 +93,15 @@ const Products = ({ products, currPageItems, pages }) => {
     }
   }, [error.msg]);
   return (
-    <Flex direction="column nowrap" gap="1rem" width="100%">
+    <Flex
+      direction="column nowrap"
+      gap="1rem"
+      width="100%"
+      justifyContent={pages === 0 ? "flex-start" : "center"}
+    >
       <Header />
       {error.msg.length > 0 && <ErrorMsg>{error.msg}</ErrorMsg>}
+
       <ItemsWrapper>
         <ErrorBoundary fallback={<h3>Filters are not available</h3>}>
           <Filters
@@ -105,8 +111,15 @@ const Products = ({ products, currPageItems, pages }) => {
             gender={GENDER}
           />
         </ErrorBoundary>
-        <Wrapper>{content}</Wrapper>
+        {pages === 0 ? (
+          <Flex alignItems="flex-start" justifyContent="center">
+            <Para>No records for the filter</Para>
+          </Flex>
+        ) : (
+          <Wrapper>{content}</Wrapper>
+        )}
       </ItemsWrapper>
+
       {pages > 1 && <Pagination pages={pages} />}
     </Flex>
   );

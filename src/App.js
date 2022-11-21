@@ -62,7 +62,7 @@ function App() {
                     />
                   }
                 />{" "}
-                <Route path="/cart" element={<Cart />} />{" "}
+                <Route path="/teerex-store/cart" element={<Cart />} />{" "}
               </Route>{" "}
             </Routes>{" "}
           </Router>{" "}

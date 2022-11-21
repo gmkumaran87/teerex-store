@@ -28,7 +28,12 @@ const Span = styled.span`
   color: ${({ theme }) => theme.teal};
 `;
 
-const CartButton = ({ selectedQty, decrementCartItem, incrementCartItem }) => {
+const CartButton = ({
+  // quantity,
+  selectedQty,
+  decrementCartItem,
+  incrementCartItem,
+}) => {
   return (
     <Wrapper>
       <Button
@@ -51,6 +56,7 @@ const CartButton = ({ selectedQty, decrementCartItem, incrementCartItem }) => {
         color="teal"
         fontWeight="700"
         clickHandler={decrementCartItem}
+        disabled={selectedQty === 1}
       >
         -
       </Button>

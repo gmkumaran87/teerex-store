@@ -58,7 +58,6 @@ export const createCheckboxItems = (products) => {
 };
 
 export const createFilteredProductsArray = (products, filterOptions, key) => {
-  console.log("Filters in helper", filterOptions, key);
   let outArray = [];
   let product = [];
   const filters = filterOptions[key];
@@ -71,15 +70,12 @@ export const createFilteredProductsArray = (products, filterOptions, key) => {
   let iter = setValues.next().value;
 
   while (iter) {
-    console.log("Filtering Products", { products, filters, setValues, iter });
-
     product = products?.filter((el) => el[key] === iter);
     outArray.push(...product);
     iter = setValues.next().value;
-    // console.log("Inside WHILE", { product, iter, filteredProducts });
   }
 
-  console.log("Filters in Helper", filters, outArray);
+  // console.log("Filters in Helper", filters, outArray);
   return outArray;
 };
 

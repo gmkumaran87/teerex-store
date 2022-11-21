@@ -27,7 +27,9 @@ const Header = () => {
   const searchProduct = useProductContext((state) => state.searchProduct);
 
   useEffect(() => {
-    if (debouncedValue) searchProduct(debouncedValue);
+    // if (debouncedValue)
+    console.log("Debounced value", debouncedValue);
+    searchProduct(debouncedValue);
   }, [debouncedValue]);
 
   const handleChange = (e) => {

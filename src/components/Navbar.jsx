@@ -1,23 +1,28 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { tablet } from "../styles/responsive";
+import { useProductContext } from "../context/productsContext";
+import { Flex } from "../styles/Common.styled";
+import { laptop, tablet } from "../styles/responsive";
 import { CartIcon } from "./icons";
 
 const Nav = styled.nav`
-  height: 70px;
+  height: 50px;
   background-color: ${({ theme }) => theme.backgroundBlue};
   color: teal;
+  ${laptop({
+    height: "60px",
+  })}
 `;
 
 const Wrapper = styled.div`
-  padding: 1rem 0.51rem;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   ${tablet({
-    padding: "1rem 1.5rem",
+    padding: "10px 20px",
   })}
 `;
 
@@ -32,9 +37,9 @@ const Right = styled.div`
   align-items: center;
 `;
 
-const H3 = styled.h3`
+const H3 = styled.h1`
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: teal;
 `;
 
@@ -57,7 +62,31 @@ const List = styled.li`
     font-weight: 500;
   }
 `;
+
+const SpanWrapper = styled.div`
+  position: ${({ position }) => position || "unset"};
+  min-width: 20px;
+  height: 20px;
+  top: ${({ top }) => top || "unset"};
+  /* left: ${({ left }) => left || "unset"}; */
+  right: ${({ right }) => right || "unset"};
+  padding: 0 5px;
+  background-color: rgb(156, 39, 176);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+`;
 const Navbar = () => {
+  const cartItems = useProductContext((state) => state.cartItems);
+
+  const totalQuantity =
+    cartItems.length > 0 &&
+    cartItems.map((el) => el.selectedQty).reduce((a, b) => a + b);
+
   return (
     <Nav>
       <Wrapper>
@@ -70,8 +99,13 @@ const Navbar = () => {
               <NavLink to="/teerex-store">Products</NavLink>
             </List>
             <List>
-              <NavLink to="/cart">
-                <CartIcon />
+              <NavLink to="/teerex-store/cart">
+                <Flex position="relative">
+                  <CartIcon />
+                  <SpanWrapper position="absolute" top="-6px" right="-11px">
+                    {totalQuantity}
+                  </SpanWrapper>
+                </Flex>
               </NavLink>
             </List>
           </UL>

@@ -5,7 +5,12 @@ const productsReducer = (state, action) => {
     case "SEARCH_PRODUCT": {
       let products = [];
       if (!action.payload) {
-        products = state.fProducts;
+        products = state.products;
+        console.log("Search result", {
+          val: action.payload,
+          filt: state.fProducts,
+          products: state.products,
+        });
       } else {
         const searchValue = action.payload?.toLowerCase();
         products = state.products.filter(
