@@ -4,3 +4,6 @@ export const GENDER = [
 ];
 
 export const ITEMS_PER_PAGE = 5;
+
+export const SHIPPING_AMT = 250;
+export const FREE_SHIPPING_LIMIT = 1000;

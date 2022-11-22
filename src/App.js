@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { fetchData } from "./services/products.service";
 import { useProductContext } from "./context/productsContext";
 
-const Cart = lazy(() => import("./pages/Cart"));
+const Cart = lazy(() => import("./pages/cart/Cart"));
 const resource = fetchData();
 
 function App() {
@@ -34,12 +34,10 @@ function App() {
       errorMsg: "",
     }));
     addProducts(convertedProducts);
-    // console.log("ADding products in useEffect");
   }, [products]);
 
   const currPageItems = pagination?.get(currPage);
 
-  console.log("Pages", { pagination, pages: pagination.size, currPage });
   return (
     <ErrorBoundary fallback={<h1> Something went wrong please try again </h1>}>
       {" "}

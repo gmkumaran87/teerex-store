@@ -6,11 +6,6 @@ const productsReducer = (state, action) => {
       let products = [];
       if (!action.payload) {
         products = state.products;
-        console.log("Search result", {
-          val: action.payload,
-          filt: state.fProducts,
-          products: state.products,
-        });
       } else {
         const searchValue = action.payload?.toLowerCase();
         products = state.products.filter(
@@ -157,9 +152,6 @@ const productsReducer = (state, action) => {
             key
           );
         }
-
-        // console.log("Filter Products", order);
-        // const filters = state.filterOptions.color;
       }
       return {
         ...state,
@@ -188,7 +180,7 @@ const productsReducer = (state, action) => {
       const removeItem = cartProducts.filter(
         (item) => item.id !== action.payload
       );
-      console.log("Remove Item", removeItem, products, action.payload);
+
       return {
         ...state,
         cartItems: removeItem,

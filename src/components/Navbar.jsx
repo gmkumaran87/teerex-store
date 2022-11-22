@@ -48,6 +48,7 @@ const UL = styled.ul`
   flex-flow: "row nowrap";
   align-items: center;
   padding: 0;
+  gap: 0.5rem;
   margin: 0;
   ${tablet({
     fontSize: "1.25rem",
@@ -55,7 +56,6 @@ const UL = styled.ul`
 `;
 const List = styled.li`
   list-style-type: none;
-  margin-right: 1rem;
 
   & a {
     color: teal;
@@ -65,10 +65,9 @@ const List = styled.li`
 
 const SpanWrapper = styled.div`
   position: ${({ position }) => position || "unset"};
-  min-width: 20px;
-  height: 20px;
+  min-width: 15px;
+  height: 15px;
   top: ${({ top }) => top || "unset"};
-  /* left: ${({ left }) => left || "unset"}; */
   right: ${({ right }) => right || "unset"};
   padding: 0 5px;
   background-color: rgb(156, 39, 176);
@@ -76,16 +75,24 @@ const SpanWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 500;
   color: #fff;
+
+  ${laptop({
+    width: "20px",
+    height: "20px",
+    fontSize: "0.75rem",
+    fontWeight: "600",
+  })}
 `;
 const Navbar = () => {
   const cartItems = useProductContext((state) => state.cartItems);
 
   const totalQuantity =
-    cartItems.length > 0 &&
-    cartItems.map((el) => el.selectedQty).reduce((a, b) => a + b);
+    cartItems.length > 0
+      ? cartItems.map((el) => el.selectedQty).reduce((a, b) => a + b)
+      : 0;
 
   return (
     <Nav>

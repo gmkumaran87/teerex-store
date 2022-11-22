@@ -1,11 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { laptop } from "../styles/responsive";
 
 const CheckWrapper = styled.div`
   display: flex;
-  flex-flow: column nowrap;
-  gap: 0.25rem;
+  flex-flow: row wrap;
+  gap: 0.5rem;
+
+  ${laptop({
+    flexFlow: "column nowrap",
+    gap: "0.25rem",
+  })}
 `;
 
 const ItemWrapper = styled.div`

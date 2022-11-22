@@ -49,6 +49,17 @@ export const SpanEl = styled.span `
   position: ${({ position }) => position || "unset"};
   top: ${({ top }) => top || "unset"};
   left: ${({ left }) => left || "unset"};
+  font-size: ${({ fontSize }) => fontSize || "unset"};
   font-weight: ${({ fontWeight }) => fontWeight || "unset"};
+  color: ${({ color }) => color || "unset"};
 `;
 // ${({ theme }) => theme.backgroundBlue}
+
+export const HR = styled.hr `
+  background-color: ${({ backgroundColor, theme }) =>
+    backgroundColor || theme.teal};
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: none;
+`;

@@ -25,7 +25,6 @@ const useStore = () => {
   const [state, dispatch] = useReducer(productsReducer, initialValues);
 
   const searchProduct = (value) => {
-    console.log("Search Product", value);
     dispatch({ type: "SEARCH_PRODUCT", payload: value });
   };
   const addProducts = (value) => {

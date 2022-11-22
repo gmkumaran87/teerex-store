@@ -5,19 +5,22 @@ import CheckBox from "./CheckBox";
 import { useState } from "react";
 import { laptop } from "../styles/responsive";
 import { useProductContext } from "../context/productsContext";
+import { LeftIcon } from "./icons";
+import { Flex, HR } from "../styles/Common.styled";
 
 const AsideWrapper = styled.aside`
-  box-shadow: ${({ theme }) => theme.boxShadow};
   flex-flow: column nowrap;
   align-items: flex-start;
-  display: none;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  background-color: #fff;
+  overflow: auto;
+  height: 100vh;
+  padding: 1rem 0.5rem;
 
   ${laptop({
-    flex: "2",
-    display: "flex",
-    padding: "1rem 2rem",
-    // height: "100vh",
-    overflow: "auto",
+    display: "none",
   })}
 `;
 
@@ -33,7 +36,7 @@ const Heading = styled.h3`
   letter-spacing: 2px;
 `;
 
-const Filters = ({ colors, types, price, gender }) => {
+const FilterMobile = ({ colors, types, price, gender, closeHandler }) => {
   const filterProducts = useProductContext((state) => state.filterProducts);
   const removeFilters = useProductContext((state) => state.removeFilters);
   const filterOptions = useProductContext((state) => state.filterOptions);
@@ -132,6 +135,11 @@ const Filters = ({ colors, types, price, gender }) => {
 
   return (
     <AsideWrapper>
+      <Flex width="100%" justifyContent="flex-start">
+        <LeftIcon closeHandler={closeHandler} />
+        <span>Back</span>
+      </Flex>
+      <HR backgroundColor="teal" />
       <FormControl>
         <Heading>Colors</Heading>
         <CheckBox list={focusbox} addingItem={handleColor} />
@@ -152,11 +160,11 @@ const Filters = ({ colors, types, price, gender }) => {
   );
 };
 
-Filters.propTypes = {
+FilterMobile.propTypes = {
   colors: PropTypes.array,
   price: PropTypes.array,
   types: PropTypes.array,
   gender: PropTypes.array,
 };
 
-export default Filters;
+export default FilterMobile;

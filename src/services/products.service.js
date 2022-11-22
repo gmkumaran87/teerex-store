@@ -18,13 +18,11 @@ export const fetchData = () => {
 };
 
 const fetchProducts = () => {
-    // console.log("FetcData");
     try {
         const data = axios
             .get(BASE_URL)
             .then((res) => res.data)
             .catch((err) => console.log(err));
-        // console.log("Data", data);
 
         return data;
     } catch (error) {

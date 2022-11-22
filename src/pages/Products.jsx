@@ -77,12 +77,9 @@ const Products = ({ products, currPageItems, pages }) => {
 
   const { colorsArray, typesArray, priceArray } = createCheckboxItems(products);
 
-  // console.log("Checkboxes", colorsArray, typesArray, priceArray);
   const finalProducts = currPageItems || filteredProducts || products;
 
   const content = finalProducts.map((el) => <Product key={el.id} item={el} />);
-
-  console.log("Products", filteredProducts);
 
   useEffect(() => {
     if (error.msg.length > 0) {

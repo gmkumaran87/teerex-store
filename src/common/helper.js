@@ -75,7 +75,6 @@ export const createFilteredProductsArray = (products, filterOptions, key) => {
     iter = setValues.next().value;
   }
 
-  // console.log("Filters in Helper", filters, outArray);
   return outArray;
 };
 

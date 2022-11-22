@@ -1,12 +1,12 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 // import PropTypes from 'prop-types'
 import styled from "styled-components";
 import { laptop, tablet } from "../styles/responsive";
 
 const Wrapper = styled.section`
   padding: 0.51rem;
-  background-color: #f7f8fb;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 
   ${tablet({
     display: "flex",
@@ -21,8 +21,11 @@ const Wrapper = styled.section`
 `;
 
 const Layout = () => {
+  const search = useLocation();
+  const isCart = search.pathname === "/teerex-store/cart";
+
   return (
-    <Wrapper>
+    <Wrapper backgroundColor={isCart ? "#fff" : "#f7f8fb"}>
       <Outlet />
     </Wrapper>
   );
